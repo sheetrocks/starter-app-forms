@@ -46,7 +46,8 @@
         },
         "webhooks": {
             "source": [
-                "api/user-info.ts"
+                "api/user-info.ts",
+                "api/form.ts"
             ],
             "distDir": "api/dist",
             "outputFormat": "esmodule",

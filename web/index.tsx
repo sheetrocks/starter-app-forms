@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { User } from '../api/globals';
+import Form, { FormData } from './form';
 
 axios.defaults.baseURL = `https://sheet.rocks/workbook/${process.env.WORKBOOK_ID}/webhooks/authenticated`;
 axios.defaults.validateStatus = () => true;
@@ -17,6 +18,9 @@ interface AppProps {
 interface AppState {
   user: User | null;
   newTask : string;
+  formData: FormData[];
+  showForm: boolean;
+  editingFormData: FormData | null;
 }
 
 // here's a react App component that renders the text "Sisyphus"
@@ -26,6 +30,10 @@ export class App extends Component<AppProps, AppState> {
     super(props);
 
     this.getUserInfo = this.getUserInfo.bind(this);
+    this.getFormData = this.getFormData.bind(this);
+    this.toast = this.toast.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+
 
     // if token value is in url, set it in localstorage
     let queryParams = new URLSearchParams(window.location.search);
@@ -52,12 +60,23 @@ export class App extends Component<AppProps, AppState> {
 
     this.state = {
       user: null,
-      newTask : ""
+      newTask : "",
+      formData: [],
+      showForm: false,
+      editingFormData: null,
     };
   }
 
   async componentDidMount() {
     await this.getUserInfo();
+    await this.getFormData();
+  }
+
+  async getFormData() {
+    // get the form data from the sheet
+    let res = await axios.get(`/form`); 
+    let formData = res.data.formData as FormData[];
+    this.setState({formData});
   }
 
   async getUserInfo() {
@@ -75,11 +94,53 @@ export class App extends Component<AppProps, AppState> {
     this.setState({user});
   }
 
+  async toast(msg :string) {
+    // show a toast message
+    let toast = document.getElementById("toast") as HTMLElement;
+    toast.innerText = msg;
+    toast.style.display = "block";
+    toast.className = "toast";
+
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
+
+  async handleDelete(id :string) {
+    // delete the form data from the sheet
+    await axios.delete(`/form?formId=${id}`);
+    await this.getFormData();
+  }
+
   render() {
+    const { formData } = this.state;
+
     return (
-      <div className="starter-app">
-        <h1>Success!</h1>
-        <h2>You have built and deployed your first SheetRocks App!</h2>
+      <div className="starter-app-forms">
+        <h1>My Progress</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>Widget Count</th>
+              <th>Submission Date</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {formData.map((fd, index) => (
+              <tr key={index}>
+                <td>{fd.widgetCount}</td>
+                <td>{fd.submissionDate}</td>
+                <td><button className="edit-form" onClick={() => this.setState({ editingFormData: fd, showForm: true})}>Edit</button></td>
+                <td><button className="delete-form" onClick={() => this.handleDelete(fd.id)}>Delete</button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <button className="new-report" onClick={() => this.setState({showForm: true, editingFormData: null})}>+New Report</button>
+        {this.state.showForm && <Form toast={this.toast}/>}
       </div>
     );
   }

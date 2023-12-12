@@ -1,3 +1,5 @@
+import { FormData } from '../web/form';
+
 export enum Method {
     GET = "GET",
     POST = "POST",
@@ -13,8 +15,10 @@ export type Request = {
         name: string;
     };
     query: {
+        formId?: string;
     };
     body: {
+        formData?: FormData;
     };
 };
 
