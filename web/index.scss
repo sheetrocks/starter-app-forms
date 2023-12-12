@@ -1,0 +1,25 @@
+// import roboto font
+// roboto font is imported from google fonts
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+
+$primary: #9E8876;
+
+body {
+  background-color: white;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+}
