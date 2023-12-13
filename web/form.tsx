@@ -14,7 +14,8 @@ interface FormState {
 
 interface FormProps {
     toast: (msg :string) => void;
-    editingFormData?: FormData;
+    editingFormData: FormData | null;
+    close :() => void;
 }
 
 class Form extends Component<FormProps, FormState> {
@@ -40,13 +41,14 @@ class Form extends Component<FormProps, FormState> {
             let res;
             // if editing, use PUT, otherwise use POST
             if (this.props.editingFormData) {
-                res = await axios.put(`/form`, this.state.formData);
+                res = await axios.put(`/form`, {formData: this.state.formData});
             } else {
-                res = await axios.post('/form', this.state.formData);
+                res = await axios.post('/form', {formData: this.state.formData});
             }
             
             if (res.status === 200) {
                 this.props.toast('Success!');
+                this.props.close();
             } else {
                 this.props.toast('Encountered an error.');
             }
@@ -57,6 +59,9 @@ class Form extends Component<FormProps, FormState> {
 
     render() {
         return (
+            <>
+            <h1>Widgets Produced</h1>
+            <p>How many widgets did you produce today?</p>
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Widget Count:
@@ -73,8 +78,12 @@ class Form extends Component<FormProps, FormState> {
                     />
                 </label>
                 <br />
-                <button type="submit">Submit</button>
+                <div className="form-buttons">
+                <button className="cancel" onClick={this.props.close}>Cancel</button>
+                <button className="submit" type="submit">Submit</button>
+                </div>
             </form>
+            </>
         );
     }
 }

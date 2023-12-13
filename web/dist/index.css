@@ -1,0 +1,151 @@
+@import "https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap";
+body {
+  background-color: #fff;
+}
+
+.starter-app-forms {
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  width: 100%;
+  margin: 2rem auto;
+}
+
+table th, table td {
+  text-align: left;
+  padding: .5rem;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+
+table th {
+  color: #fff;
+  background-color: #3434a8;
+}
+
+.new-report {
+  color: #fff;
+  cursor: pointer;
+  background-color: #3434a8;
+  border: none;
+  border-radius: 1.5rem;
+  outline: none;
+  width: 8rem;
+  height: 3rem;
+  position: absolute;
+  bottom: 5rem;
+  right: .5rem;
+  box-shadow: 0 0 10px #00000080;
+}
+
+.new-report:hover {
+  background-color: #282881;
+}
+
+form {
+  width: 80%;
+  margin: 0 auto;
+}
+
+form label {
+  margin-bottom: .5rem;
+  display: block;
+}
+
+form input {
+  border: 1px solid #ddd;
+  border-radius: .25rem;
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: .5rem;
+  display: block;
+}
+
+form input:focus {
+  border-color: #3434a8;
+  outline: none;
+}
+
+form .form-buttons {
+  justify-content: flex-end;
+  align-items: center;
+  display: flex;
+}
+
+form .form-buttons button {
+  cursor: pointer;
+  border: none;
+  border-radius: .25rem;
+  outline: none;
+  margin-left: 1rem;
+  padding: .5rem 1rem;
+}
+
+form .form-buttons button:hover {
+  opacity: .8;
+}
+
+form .form-buttons .cancel {
+  color: #3434a8;
+  background-color: #0000;
+}
+
+form .form-buttons .cancel:hover {
+  text-decoration: underline;
+}
+
+form .form-buttons .submit {
+  color: #fff;
+  background-color: #3434a8;
+}
+
+.toast {
+  text-align: center;
+  color: #fff;
+  background-color: #3434a8;
+  width: 100%;
+  padding: 2rem;
+  font-size: 1.5rem;
+  animation: .5s ease-in-out slide-up;
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  box-shadow: 0 0 10px #00000080;
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/*# sourceMappingURL=index.css.map */

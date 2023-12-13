@@ -2,10 +2,17 @@
 // roboto font is imported from google fonts
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
 
-$primary: #9E8876;
+$primary: #3434a8;
 
 body {
   background-color: white;
+}
+
+.starter-app-forms {
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  min-height: 100vh;
 }
 
 * {
@@ -22,4 +29,117 @@ h2 {
   font-size: 1.5rem;
   text-align: center;
   margin-top: 2rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid #ddd;
+  th, td {
+    text-align: left;
+    padding: 0.5rem;
+  }
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  th {
+    background-color: $primary;
+    color: white;
+  }
+}
+
+.new-report {
+  position: absolute;
+  bottom: 5rem;
+  right: 0.5rem;
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 1.5rem;
+  width: 8rem;
+  height: 3rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    background-color: darken($primary, 10%);
+  }
+}
+
+// style html form, label, and input similar to bulma
+form {
+  margin: 0 auto;
+  width: 80%;
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    &:focus {
+      outline: none;
+      border-color: $primary;
+    }
+  }
+
+  // class for .cancel and .submit buttons. Should be flex aligned right, vertically centered. submit button should have primary background. Cancel button should be styled like a link
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    button {
+      margin-left: 1rem;
+      border: none;
+      border-radius: 0.25rem;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      outline: none;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .cancel {
+      background-color: transparent;
+      color: $primary;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .submit {
+      background-color: $primary;
+      color: white;
+    }
+  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  text-align: center;
+  display: none;
+  background-color: $primary;
+  color: white;
+  padding: 2rem;
+  font-size: 1.5rem;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  // animate with slide up keyframe
+  animation: slide-up 0.5s ease-in-out;
+  @keyframes slide-up {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 }

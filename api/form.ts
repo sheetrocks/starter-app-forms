@@ -29,7 +29,7 @@ async function main(req :Request) {
             return {success: false, message: "System error - could not get tasks"};
         }
     
-        let tasks = (res.data as string[][]).map((row) => {
+        let formData = (res.data as string[][]).map((row) => {
             return {
                 id: row[0],
                 submitterEmail: row[1],
@@ -37,7 +37,7 @@ async function main(req :Request) {
                 submissionDate: row[3],
             } as FormData})
 
-        return {success: true, tasks};
+        return {success: true, formData};
     }
 
     if(req.method === "PUT") {
@@ -70,7 +70,7 @@ async function main(req :Request) {
         // use replaceone to update the task, uses the same MatchFormula as findone and ReplaceWith string[][]
         let replaceRes = await axios.put(`https://sheet.rocks/api/v1/workbook/${workbookID}/sheet/${formSheetID}/db/replaceone`, {
             MatchFormula: `=COL[A] = "${req.body.formData!.id}"`,
-            ReplaceWith: [formData.id, formData.submitterEmail, `${formData.widgetCount}`, formData.submissionDate],
+            ReplaceWith: [formData.id, formData.submitterEmail, `${req.body.formData.widgetCount}`, formData.submissionDate],
         });
 
         if(replaceRes.status !== 200) {
